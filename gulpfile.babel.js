@@ -21,7 +21,7 @@ const consoleStats = {
 };
 
 gulp.task("clean", cb => {
-	rimraf("./public/build", () => cb());
+	rimraf("./public", () => cb());
 });
 
 gulp.task(

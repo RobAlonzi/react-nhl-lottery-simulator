@@ -3,10 +3,10 @@ var ReactDOM = require("react-dom");
 var expect = require("expect");
 var TestUtils = require("react-addons-test-utils");
 
-var AppContainer = require("../../js/components/AppContainer");
+var App = require("./App");
 
 describe("AppContainer", () => {
 	it("should exist", () => {
-		expect(AppContainer).toExist();
+		expect(App).toExist();
 	});
 })

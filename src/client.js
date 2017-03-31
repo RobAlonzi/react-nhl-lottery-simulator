@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Route, Router, IndexRoute, hashHistory } from "react-router";
 
-import AppContainer from "./components/AppContainer";
+import App from "./Containers/App";
+import "./client.scss";
 
-import "../css/style.scss";
 
 ReactDOM.render(
-	<AppContainer />,
+	<App />,
 	document.getElementById('root')
 );
