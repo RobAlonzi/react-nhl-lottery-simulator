@@ -4,6 +4,7 @@ header{
 	background: $blue;
 	padding:20px 0;
 	text-align:center;
+	margin-bottom:40px;
 	
 	h1{
 		color:$white;
@@ -14,7 +15,13 @@ header{
 
 .buttons{
 	text-align:center;
+	margin-top:40px;
 	button{
 		margin:20px;
+		cursor:pointer;
 	}
+}
+
+.alert-danger{
+	margin:20px 0;
 }

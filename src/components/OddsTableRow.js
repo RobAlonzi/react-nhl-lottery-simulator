@@ -1,11 +1,13 @@
 import React from "react";
 import "./OddsTableRow.scss";
 
-const OddsTableRow = ({ row }) => {
+const OddsTableRow = ({ combos, id, name, percent, place }) => {
 	return (
-		<div>
-			ROW
-		</div>
+		<tr>
+			<th scope="row">{place}</th>
+			<td>{name}</td>
+			<td>{combos.length} ({percent}% chance) </td>
+		</tr>
 	);
 };
 

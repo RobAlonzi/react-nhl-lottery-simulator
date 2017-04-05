@@ -1,0 +1,33 @@
+@import "../variables";
+
+.odds{
+	margin-top:40px;
+	h2{
+		margin:0 0 30px;
+		@include mq("phone"){
+			margin:0 0 30px 15px;
+		}
+	}
+
+	table{
+		text-align: center;
+
+		thead,th{
+			text-align: center;
+		}
+
+		td.change-up, td.change-up i{
+			color:green;
+		}
+
+		td.change-down, td.change-down i{
+			color:red;
+		}
+
+		tr.eliminated{
+			td,th{
+				opacity:0.25;
+			}
+		}
+	}
+}

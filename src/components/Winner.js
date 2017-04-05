@@ -4,10 +4,12 @@ import "./Winner.scss";
 
 const Winner = ({ pick, team, winningCombo, changeInPosition }) => {
 	return (
-		<div className="winning-team">
-			<h2>Pick #{pick}</h2>
-			<p>{team} <span className="change-up">({changeInPosition})</span></p>
-			<BallList balls={winningCombo}/>
+		<div className="col-sm-4">
+			<div className="col-sm-12 winning-team">
+				<h2>Pick #{pick}</h2>
+				<p>{team} <span className="change-up">({changeInPosition})</span></p>
+				<BallList balls={winningCombo} style="small"/>
+			</div>
 		</div>
 	);
 };

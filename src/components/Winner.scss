@@ -1,0 +1,29 @@
+@import "../variables";
+
+.winning-team{
+		padding:0 40px;
+		border-bottom: 3px solid #f1c40f;
+
+		h2{
+			text-align: center;
+			font-size:2.5em;
+		}
+		p{
+			text-align: center;
+			font-size:1.2em;
+			margin:20px 0;
+
+			span{
+				font-size:1em;
+
+				&.change-up, &.change-up i{
+					color:green;
+				}
+
+				&.change-down, &.change-down i{
+					color:red;
+				}
+			}
+
+		}	
+	}
