@@ -14,9 +14,6 @@ class App extends Component{
 			currentRound: undefined,
 			numberOfRounds: undefined,
 			roundInProgress : false,
-			lowestNumberToDraw: 1,
-			highestNumberToDraw: 14,
-			ballsDrawnPerRound: 4,
 			numbersAvailable: [],
 			numbersPicked: [],
 			winners: [
@@ -44,7 +41,9 @@ class App extends Component{
 	}
 
 	componentDidMount(){
-		let {lowestNumberToDraw, highestNumberToDraw, ballsDrawnPerRound} = this.state;
+		let lowestNumberToDraw = 1,
+			highestNumberToDraw = 14,
+			ballsDrawnPerRound = 4;
 
 		let numbersAvailable = Utils.generateAvailableNumbers(lowestNumberToDraw, highestNumberToDraw);
 		let allCombos = Utils.getAllCombos(numbersAvailable, ballsDrawnPerRound);
