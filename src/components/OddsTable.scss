@@ -29,5 +29,42 @@
 				opacity:0.25;
 			}
 		}
+
+		tbody tr {
+			th:first-child{
+				width:5%;
+			}
+			td:last-child{
+				width:20%;
+			}
+			td{
+				width:75%;
+			}
+
+			&.final-row{
+				img{
+					margin-right: 0;
+				}
+				th:first-child{
+					width:10%;
+					font-size:1.5em;
+					font-weight: 500;
+					vertical-align: middle;
+				}
+				td{
+					width:80%;
+					vertical-align: middle;
+					padding:20px; 
+					
+					p{
+						margin:10px 0 0 0;
+					}
+				}
+				td:last-child{
+					width:10%;
+					font-size:1.5em;
+				}
+			}
+		}
 	}
 }

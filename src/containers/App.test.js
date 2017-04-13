@@ -6,7 +6,7 @@ var TestUtils = require("react-addons-test-utils");
 var App = require("./App");
 
 describe("AppContainer", () => {
-	it("should exist", () => {
+	it('Should exist', () => {
 		expect(App).toExist();
 	});
-})
+});

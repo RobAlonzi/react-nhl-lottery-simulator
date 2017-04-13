@@ -3,8 +3,9 @@ import Winner from "./Winner";
 import "./WinnerList.scss";
 
 const WinnerList = ({ winners }) => {
+
 	const winnersArray = winners.map(winner => 
-		<Winner key={winner.pick} pick={winner.pick} team={winner.team} winningCombo={winner.winningCombo} changeInPosition={winner.changeInPosition} /> 
+		<Winner key={winner.pick} {...winner} /> 
 	);
 
 	return (

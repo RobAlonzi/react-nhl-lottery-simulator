@@ -3,6 +3,7 @@ let rimraf = require("rimraf");
 let webpack = require("webpack");
 let webpackConfig = require("./webpack.config.js");
 let Server = require("karma").Server;
+let jest = require("gulp-jest").default;
 
 //TO-DO: add server side stuff
 
@@ -53,7 +54,7 @@ function watchClient() {
 	const WebpackDevServer = require("webpack-dev-server");
 	const compiler = webpack(webpackConfig);
 	const server = new WebpackDevServer(compiler, {
-    	contentBase: "./public/",
+		contentBase: "./public/",
 		hot: true,
 		stats: consoleStats
 	});
@@ -63,6 +64,20 @@ function watchClient() {
 
 //--------------------------------
 // Karma Testing
-gulp.task('tests', function (done) {
-  new Server({configFile: __dirname + '/karma.conf.js', singleRun: true}, done).start();
+gulp.task('test', function (done) {
+	Server.start({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, done);
 });
+
+// gulp.task('jest', function () {
+// 	return gulp.src('./src/**/App.test.js').pipe(jest({
+// 		config: {
+// 			"transformIgnorePatterns": [
+// 				"<rootDir>/dist/", "<rootDir>/node_modules/"
+// 			],
+// 			"automock": false
+// 		}
+// 	}));
+// });

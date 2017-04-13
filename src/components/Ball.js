@@ -13,6 +13,7 @@ const Ball = ({ number, style }) => {
 
 Ball.propTypes = { 
 	number: React.PropTypes.number.isRequired,
+	style: React.PropTypes.string
 };
 
 export default Ball;

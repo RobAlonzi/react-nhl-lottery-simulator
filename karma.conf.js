@@ -8,10 +8,10 @@ module.exports = function(config){
 		singleRun: true,
 		frameworks: ["mocha"],
 		files: [
-			"./src/js/**/*.test.js",
+			"./src/**/*.test.js",
 		],
 		preprocessors: {
-			'./src/js/**/*.test.js': ['webpack']
+			'./src/**/*.test.js': ['webpack']
 		},
 		reporters: ["mocha"],
 		//reporters: ["mocha", "progress"],
