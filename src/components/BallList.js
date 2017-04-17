@@ -13,6 +13,9 @@ const BallList = ({ balls, style = "default" }) => {
 	);
 };
 
-BallList.propTypes = { balls: React.PropTypes.array.isRequired };
+BallList.propTypes = { 
+	balls: React.PropTypes.array.isRequired, 
+	style:React.PropTypes.string 
+};
 
 export default BallList;

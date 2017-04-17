@@ -23,7 +23,8 @@ Winner.propTypes = {
 	pick: React.PropTypes.number.isRequired,
 	team: React.PropTypes.string.isRequired,
 	winningCombo: React.PropTypes.array.isRequired,
-	changeInPosition: React.PropTypes.number.isRequired
+	changeInPosition: React.PropTypes.number.isRequired,
+	teamId: React.PropTypes.number.isRequired
 };
 
 export default Winner;
