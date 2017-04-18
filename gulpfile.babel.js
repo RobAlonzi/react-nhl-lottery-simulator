@@ -3,7 +3,6 @@ let rimraf = require("rimraf");
 let webpack = require("webpack");
 let webpackConfig = require("./webpack.config.js");
 let Server = require("karma").Server;
-let jest = require("gulp-jest").default;
 
 //TO-DO: add server side stuff
 
