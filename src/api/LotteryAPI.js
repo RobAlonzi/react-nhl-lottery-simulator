@@ -192,7 +192,7 @@ export function revealFinalDraftOrder(teams, winners){
 	});
 
 	return nonWinningTeams.map((team, i) => {
-		team.difference = findChangeInPosition(team, teams, i + 4);
+		team.difference = findChangeInPosition(team, teams, (i + winners.length) + 1);
 		return team;
 	});
 }

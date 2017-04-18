@@ -302,12 +302,6 @@ describe("LotteryAPI", () => {
 					name: "Vancouver Canucks",
 					percent: 25,
 					combos: [[1,2,3], [1,2,4]]
-				},{
-					id: "sjs",
-					teamId: 23,
-					name: "San Jose Sharks",
-					percent: 25,
-					combos: [[1,2,3], [1,2,4]]
 				}
 			];
 
@@ -315,8 +309,8 @@ describe("LotteryAPI", () => {
 			
 			expect(updTeams[0].name).toEqual("Detroit Red Wings");
 			expect(updTeams[1].name).toEqual("Toronto Maple Leafs");
-			expect(updTeams[0].difference).toEqual(-2);
-			expect(updTeams[1].difference).toEqual(-1);
+			expect(updTeams[0].difference).toEqual(-1);
+			expect(updTeams[1].difference).toEqual(0);
 		});
 
 		
