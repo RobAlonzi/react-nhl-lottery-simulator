@@ -1,9 +1,17 @@
+@import "../variables";
+
 .winner-list{
 	margin-top:40px;
+	justify-content: space-around;
+
+	@include mq("phablet"){
+		margin-top:60px;
+	}
 
 	img{
 		height:200px;
 		display: block;
 		margin: 0 auto 10px;
+		max-width: 100%;
 	}
 }

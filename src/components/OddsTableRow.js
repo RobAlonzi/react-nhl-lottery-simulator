@@ -15,7 +15,7 @@ const OddsTableRow = ({ combos, id, name, percent, place, teamId, winningNumbers
 				<tr className="final-row">
 				<th scope="row">#{place}</th>
 				<td>{logoUrl} <p>{name}</p></td>
-				<td className={`change-${changeClass}`}><i className={`ion-arrow-${changeClass}-a`}></i> {absDifference}</td>
+				<td className={`change-${changeClass}`}><i className={`fa fa-arrow-${changeClass}`}></i> {absDifference}</td>
 				</tr>
 			);
 		}else{

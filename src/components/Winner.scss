@@ -1,29 +1,52 @@
 @import "../variables";
 
 .winning-team{
-		padding:0 40px;
-		border-bottom: 3px solid #f1c40f;
+	margin:40px 0;
+	border-bottom: 3px solid #f1c40f;
+	flex-basis: 300px;
 
-		h2{
-			text-align: center;
-			font-size:2.5em;
+	@include mq("tablet-small"){
+		margin:20px 0;
+	}
+
+	h2{
+		text-align: center;
+		font-size:2.5em;
+		@include mq("tablet-small"){
+			font-size:1.5em;
 		}
-		p{
-			text-align: center;
-			font-size:1.2em;
-			margin:20px 0;
+	}
+	p{
+		text-align: center;
+		font-size:1.2em;
+		margin:20px 0;
 
-			span{
-				font-size:1em;
+		@include mq("tablet-small"){
+			margin:0;
+			font-size:1em;
+		}
 
-				&.change-up, &.change-up i{
-					color:green;
-				}
+		img{
+			@include mq("tablet-small"){
+				display: inline-block;
+				width:25%;
+				height: initial;
+				margin:0 15px 0 0;
+			}
+		}
 
-				&.change-down, &.change-down i{
-					color:red;
-				}
+		span{
+			font-size:1em;
+			white-space: nowrap;
+
+			&.change-up, &.change-up i{
+				color:green;
 			}
 
-		}	
-	}
+			&.change-down, &.change-down i{
+				color:red;
+			}
+		}
+
+	}	
+}

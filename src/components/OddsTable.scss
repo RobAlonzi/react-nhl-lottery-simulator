@@ -5,7 +5,8 @@
 	h2{
 		margin:0 0 30px;
 		@include mq("phone"){
-			margin:0 0 30px 15px;
+			margin:0 0 30px 5px;
+			font-size: 1.5em;
 		}
 	}
 
@@ -39,22 +40,57 @@
 			}
 			td{
 				width:75%;
+
+				img{
+					height: 40px;
+					margin-right:15px;
+					@include mq("phone"){
+						margin:0 auto 5px;
+						display: block;
+					}
+				}
+
+				span{
+					font-weight: bold;
+
+					@include mq("tablet-wide"){
+						display: block;
+					}
+					
+					&.wins-with{
+						display: block;
+						font-size:0.8rem;
+						font-weight: normal;
+					}
+				}
 			}
 
 			&.final-row{
 				img{
-					margin-right: 0;
+					max-width: 100%;
+					height: 100px;
+
+					@include mq("phone"){
+						height:50px;
+					}
 				}
 				th:first-child{
 					width:10%;
 					font-size:1.5em;
 					font-weight: 500;
 					vertical-align: middle;
+					@include mq("phone"){
+						width:30%;
+						font-size:1.25em;
+					}
 				}
 				td{
 					width:80%;
 					vertical-align: middle;
 					padding:20px; 
+					@include mq("phone"){
+						width:40%;
+					}
 					
 					p{
 						margin:10px 0 0 0;
@@ -63,6 +99,10 @@
 				td:last-child{
 					width:10%;
 					font-size:1.5em;
+					@include mq("phone"){
+						width:30%;
+						font-size:1em;
+					}
 				}
 			}
 		}

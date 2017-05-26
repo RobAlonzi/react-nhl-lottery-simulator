@@ -8,6 +8,10 @@ header{
 	h1{
 		color:$white;
 		margin:0;
+
+		@include mq("phone"){
+			font-size:2rem;
+		}
 	}
 }
 
@@ -18,6 +22,14 @@ header{
 	button{
 		margin:20px;
 		cursor:pointer;
+
+		@include mq("phablet"){
+			margin:10px;
+		}
+	}
+
+	@include mq("phablet"){
+		margin-top:20px;
 	}
 }
 
@@ -37,4 +49,9 @@ header{
 	text-align: right;
 	display: block;
 	padding:10px;
+
+	@include mq("phone"){
+		text-align: center;
+		padding:0;
+	}
 }

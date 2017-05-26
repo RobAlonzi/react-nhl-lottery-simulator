@@ -10,13 +10,6 @@ require('dotenv').config();
 let frontEndEntries = ["./src/client.js"];
 const OUTPUT_PATH = path.join(__dirname, "public");
 
-const VENDOR_LIBS = [
-	"lodash",
-	"react",
-	"react-dom",
-	"react-router",
-	"redux"
-];
 
 //TO-DO: set is Dev from remote location
 const buildStyle = process.env.NODE_ENV || "development";
@@ -69,8 +62,7 @@ function createWebpackConfig(){
 	return {
 		devtool,
 		entry: {
-			app: frontEndEntries,
-			vendor: VENDOR_LIBS
+			app: frontEndEntries
 		},
 		module:{
 			rules: _.values(loaders)

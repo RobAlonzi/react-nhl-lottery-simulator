@@ -1,2 +1,11 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
+@import "./variables";
 
+#github{
+	margin-left: 10px;
+	
+	@include mq("phone"){
+		text-align: center;
+		margin:10px 0;
+	}
+}

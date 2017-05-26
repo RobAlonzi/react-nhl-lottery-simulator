@@ -208,15 +208,15 @@ export function revealFinalDraftOrder(teams, winners){
 function getDefaultTeams(){
 	// let defaultTeams = [
 	// 	{
-	// 		id: "wpg",
-	// 		teamId: 52,
-	// 		name: "Winnipeg Jets",
-	// 		percent: 17.9,
-	// 		combos: [],
-	// 	},{
 	// 		id: "van",
 	// 		teamId: 23,
 	// 		name: "Vancouver Canucks",
+	// 		percent: 18,
+	// 		combos: [],
+	// 	},{
+	// 		id: "wpg",
+	// 		teamId: 52,
+	// 		name: "Winnipeg Jets",
 	// 		percent: 12.1,
 	// 		combos: [],
 	// 	},
@@ -240,40 +240,40 @@ function getDefaultTeams(){
 	// 		percent: 8.5,
 	// 		combos: [],
 	// 	},{
-	// 		id: "car",
-	// 		teamId: 12,
-	// 		name: "Carolina Hurricanes",
-	// 		percent: 7.6,
-	// 		combos: [],
-	// 	},{
 	// 		id: "chi",
 	// 		teamId: 16,
 	// 		name: "Chicago Blackhawks",
-	// 		percent: 6.7,
+	// 		percent: 7.6,
 	// 		combos: [],
 	// 	},{
 	// 		id: "det",
 	// 		teamId: 17,
 	// 		name: "Detroit Red Wings",
+	// 		percent: 6.7,
+	// 		combos: [],
+	// 	},{
+	// 		id: "car",
+	// 		teamId: 12,
+	// 		name: "Carolina Hurricanes",
 	// 		percent: 5.8,
-	// 		combos: [],
-	// 	},{
-	// 		id: "cgy",
-	// 		teamId: 20,
-	// 		name: "Calgary Flames",
-	// 		percent: 5.4,
-	// 		combos: [],
-	// 	},{
-	// 		id: "pit",
-	// 		teamId: 5,
-	// 		name: "Pittsburgh Penguins",
-	// 		percent: 4.5,
 	// 		combos: [],
 	// 	},{
 	// 		id: "min",
 	// 		teamId: 30,
 	// 		name: "Minnesota Wild",
-	// 		percent: 3.1,
+	// 		percent: 5.4,
+	// 		combos: [],
+	// 	},{
+	// 		id: "cgy",
+	// 		teamId: 20,
+	// 		name: "Calgary Flames",
+	// 		percent: 4.5,
+	// 		combos: [],
+	// 	},{
+	// 		id: "pit",
+	// 		teamId: 5,
+	// 		name: "Pittsburgh Penguins",
+	// 		percent: 3.2,
 	// 		combos: [],
 	// 	},{
 	// 		id: "lak",
@@ -282,22 +282,22 @@ function getDefaultTeams(){
 	// 		percent: 2.7,
 	// 		combos: [],
 	// 	},{
-	// 		id: "phi",
-	// 		teamId: 4,
-	// 		name: "Philadelphia Flyers",
+	// 		id: "cbj",
+	// 		teamId: 29,
+	// 		name: "Columbus Blue Jackets",
 	// 		percent: 2.2,
 	// 		combos: [],
 	// 	},
 	// 	{
-	// 		id: "wsh",
-	// 		teamId: 15,
-	// 		name: "Washington Capitals",
+	// 		id: "phi",
+	// 		teamId: 4,
+	// 		name: "Philadelphia Flyers",
 	// 		percent: 1.8,
 	// 		combos: [],
 	// 	},{
-	// 		id: "tor",
-	// 		teamId: 10,
-	// 		name: "Toronto Maple Leafs",
+	// 		id: "fla",
+	// 		teamId: 13,
+	// 		name: "Florida Panthers",
 	// 		percent: 0.9,
 	// 		combos: [],
 	// 	}
@@ -309,7 +309,7 @@ function getDefaultTeams(){
 			id: "col",
 			teamId: 21,
 			name: "Colorado Avalanche",
-			percent: 17.9,
+			percent: 18,
 			combos: [],
 		},{
 			id: "van",
@@ -371,7 +371,7 @@ function getDefaultTeams(){
 			id: "car",
 			teamId: 12,
 			name: "Carolina Hurricanes",
-			percent: 3.1,
+			percent: 3.2,
 			combos: [],
 		},{
 			id: "wpg",

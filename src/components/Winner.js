@@ -9,12 +9,10 @@ const Winner = ({ pick, team, winningCombo, changeInPosition, teamId }) => {
 
 	let logoUrl =`https://www-league.nhlstatic.com/builds/site-core/8d679dc125a67f8bf52f63a8cb3e70be14f173e9_1491511772/images/logos/team/current/team-${teamId}-dark.svg`;
 	return (
-		<div className="col-sm-4">
-			<div className="col-sm-12 winning-team">
-				<h2>Pick #{pick}</h2>
-				<p><img src={logoUrl} /> {team} <span className={`change-${changeClass}`}>(<i className={`ion-arrow-${changeClass}-a`}></i> {absDifference})</span></p>
-				<BallList balls={winningCombo} style="small"/>
-			</div>
+		<div className="winning-team">
+			<h2>Pick #{pick}</h2>
+			<p><img src={logoUrl} /> {team} <span className={`change-${changeClass}`}>(<i className={`fa fa-arrow-${changeClass}`}></i> {absDifference})</span></p>
+			<BallList balls={winningCombo} style="small"/>
 		</div>
 	);
 };
