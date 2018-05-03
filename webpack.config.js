@@ -1,79 +1,62 @@
 let path = require("path"),
-	_ = require("lodash"),
 	webpack = require("webpack"),
 	HtmlWebpackPlugin = require("html-webpack-plugin"),
 	ExtractTextPlugin = require("extract-text-webpack-plugin"),
-	OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+	OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-require('dotenv').config();
+//3rd party modules
+const vendorModules = ["react", "react-dom", "prop-types", "material-ui"];
+const isDebug = true;
+const dirname = path.resolve("./");
 
-let frontEndEntries = ["./src/client.js"];
-const OUTPUT_PATH = path.join(__dirname, "public");
-
-
-//TO-DO: set is Dev from remote location
-const buildStyle = process.env.NODE_ENV || "development";
-const cssLoader = (buildStyle === "development") ? ["style-loader","css-loader?sourceMap"] : ExtractTextPlugin.extract("css-loader");
-const sassLoader = (buildStyle === "development") ?  ["style-loader","css-loader?sourceMap", "sass-loader?sourceMap"] : ExtractTextPlugin.extract("css-loader!sass-loader");
-const devtool = (buildStyle === "development") ? "source-map" : "";
-
-const loaders = {
-	js: 	{ test: /\.jsx?$/, use:"babel-loader", exclude: /node_modules/ },
-	css: 	{ test: /\.css$/, use: cssLoader},
-	sass: 	{ test: /\.scss$/, use: sassLoader},
-	// eslint: { test: /\.jsx?$/, loader: "eslint", exclude: /node_modules/ },
-	// json: 	{ test: /\.json$/, loader: "json" },
-	// files: 	{ test: /\.(png|jpg|jpeg|gif|woff|ttf|eot|svg|woff2)/, loader: "url-loader?limit=5000" } 
-};
-
-const plugins = [
-	new webpack.optimize.CommonsChunkPlugin({
-		names: ["vendor", "manifest"]
-	}),
-	new webpack.DefinePlugin({
-		"process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV)
-	}),
-	new HtmlWebpackPlugin({
-		template: "./src/index.html"
-	}),
+const devTool = isDebug ? "eval-source-map" : "";
+const plugins = [ 
+  new HtmlWebpackPlugin({template: "./src/index.html"}),
 ];
 
-let publicPath = "";
+const cssLoader = { test: /\.css$/, use: ["style-loader", "css-loader"]};
+const sassLoader = { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"] };
+const appEntry = __dirname + "/src/client.js";
 
-if(buildStyle === "development"){
-	plugins.push(new webpack.HotModuleReplacementPlugin());
-	frontEndEntries.unshift(
-			"react-hot-loader/patch",
-			"webpack-dev-server/client?http://localhost:8080/", 
-			"webpack/hot/only-dev-server"
-			);
-	publicPath = "http://localhost:8080/";
-}else{
-	plugins.push(new ExtractTextPlugin({filename: "css/[name].[hash].css"}));
-	plugins.push(new OptimizeCssAssetsPlugin({
-		cssProcessorOptions: { discardComments: {removeAll: true } }
-	}));
-	plugins.push(new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}));
 
-}
-
-//TO-DO: if prod, add uglify plugin
-function createWebpackConfig(){
-	return {
-		devtool,
+// ---------------------
+// WEBPACK CONFIG
+module.exports = {
+		devtool: devTool,
+		mode: 'development',
 		entry: {
-			app: frontEndEntries
-		},
-		module:{
-			rules: _.values(loaders)
+			application: appEntry,
+			vendor: vendorModules
 		},
 		output: {
-			path: OUTPUT_PATH,
-			filename: "js/[name].[hash].js",
-			publicPath
+			path: path.join(dirname, "public"),
+			filename: "[name].js"
 		},
-		plugins
+		module : {
+			rules: [
+				{ test: /\.js$/, loader:"babel-loader", exclude: "/(node_modules|bower_compontents)/", options: {
+          presets: [
+            'react',
+            'stage-0',
+            ['env', { targets: { browsers: ['last 2 versions'] } }]
+          ]
+        } },
+				{ test: /\.(png|jpg|jpeg|gif|woff|ttf|eot|svg|woff2)$/, loader:"url-loader?limit=1024"},
+				cssLoader,
+				sassLoader
+			]
+    },
+    plugins: plugins,
+    optimization: {
+      splitChunks: {
+          cacheGroups: {
+              vendor: {
+                  test: 'vendor',
+                  name: "vendor",
+                  chunks: "initial"
+              }
+          }
+      }
+    },
 	};
-}
-
-module.exports = createWebpackConfig();
+	// ---------------------

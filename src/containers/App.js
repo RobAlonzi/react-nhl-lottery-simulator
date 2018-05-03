@@ -1,186 +1,108 @@
 import React, { Component } from "react";
 import moment from "moment";
-import * as API from "../api/LotteryAPI";
+import { connect } from "react-redux";
+import Grid from 'material-ui/Grid';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import Snackbar from 'material-ui/Snackbar';
+
+import { setupLottery } from "../actions/setup";
+import Utility from "../helpers/Utility";
+import { resetLottery, startRound, drawBall } from "../actions/lottery";
 import "./App.scss";
 
 import BallList from "../components/BallList";
-import WinnerList from "../components/WinnerList";
+import DraftOrder from "../components/DraftOrder";
 import OddsTable from "../components/OddsTable";
 
-const lowestNumberToDraw = 1,
-	highestNumberToDraw = 14,
-	ballsDrawnPerRound = 4;
-
-const numbersAvailable = Object.freeze(API.generateAvailableNumbers(lowestNumberToDraw, highestNumberToDraw)),
-	allCombos = Object.freeze(API.getAllCombos(numbersAvailable, ballsDrawnPerRound)),
-	teamsStart = Object.freeze(API.generateTeamsAndCombos(allCombos));
-
-
 class App extends Component{
-	
-	constructor() {
-		super();
-		this.state = {
-			currentRound: undefined,
-			numberOfRounds: undefined,
-			ballsPerRound: undefined,
-			roundInProgress : undefined,
-			replayLastRound: undefined,
-			lotteryOver: undefined,
-			numbersAvailable: [],
-			numbersPicked: [],
-			winners: [],
-			teams: [],
-			lastRan: undefined
-		};
-
-		//binding functions
-		this.handleReset = this.handleReset.bind(this);
-		this.handleDrawBall = this.handleDrawBall.bind(this);
-		this.handleStartRound = this.handleStartRound.bind(this);
-		this.handleEndRound = this.handleEndRound.bind(this);
-		this.handleEndLottery = this.handleEndLottery.bind(this);
-	}
 
 	componentDidMount(){
-		this.setState({
-			currentRound: 1,
-			numberOfRounds: 3,
-			ballsPerRound: 4,
-			roundInProgress : true,
-			replayLastRound: false,
-			lotteryOver: false,
-			numbersAvailable,
-			teams: JSON.parse(JSON.stringify(teamsStart)),
-			lastRan: API.getLastRan()
-		});
-	}
-
-	handleReset(){
-		this.setState({
-			currentRound: 1,
-			roundInProgress: true,
-			lotteryOver: false,
-			replayLastRound: false,
-			numbersAvailable,
-			numbersPicked : [],
-			winners: [],
-			teams: JSON.parse(JSON.stringify(teamsStart))
-		});
-	}
-
-	handleDrawBall(){
-		let { numbersPicked, numbersAvailable, teams } = this.state;
-
-		numbersPicked.push(API.drawNewBall(numbersAvailable, numbersPicked));
-
-		this.setState({
-			numbersPicked
-		});
-
-		let updTeamPcts = API.recalculateOdds(teams, numbersPicked);
-		if(this.state.numbersPicked.length === this.state.ballsPerRound - 1){
-			updTeamPcts = API.showWinningNumbers(updTeamPcts, numbersPicked);
-		}
-
-		this.setState({
-			teams:updTeamPcts
-		});
-
-
-		if(this.state.numbersPicked.length === this.state.ballsPerRound){
-			this.handleEndRound();
-		}
-	}
-
-	handleStartRound(){
-		let { currentRound, winners, replayLastRound } = this.state;
-		let updatedTeams = API.removeWinningTeamsFromLottery(JSON.parse(JSON.stringify(teamsStart)), winners);
-		updatedTeams = API.recalculateOdds(updatedTeams, []);
-
-		this.setState({
-			roundInProgress: true,
-			currentRound: replayLastRound ? currentRound : ++currentRound,
-			numbersPicked: [],
-			teams: updatedTeams,
-			replayLastRound: false
-		});
-	}
-
-	handleEndRound(){
-		let { numbersPicked, teams, winners, currentRound, numberOfRounds } = this.state;
-		let winningTeam = API.findWinner(teams, numbersPicked);
-
-		if(winningTeam.id === "rdw"){
-			this.setState({
-				roundInProgress: false,
-				replayLastRound: true
-			});
-
-			return;
-		}
-
-		
-		this.setState({
-			winners:[
-				...winners,
-				{
-					id: winningTeam.id,
-					pick: currentRound,
-					teamId: winningTeam.teamId,
-					team: winningTeam.name,
-					winningCombo: winningTeam.winningCombo,
-					changeInPosition: API.findChangeInPosition(winningTeam, JSON.parse(JSON.stringify(teamsStart)), currentRound)
-				}
-			],
-			roundInProgress: false
-		}, () => {
-
-			if(currentRound === numberOfRounds){
-				this.handleEndLottery();
-				return;
-			}
-
-		});
-	}
-
-	handleEndLottery(){
-		let {winners} = this.state;
-
-		let finalTeams = API.revealFinalDraftOrder(JSON.parse(JSON.stringify(teamsStart)), winners);
-		let lastRan = API.setLastRan(moment().unix());
-
-		this.setState({
-			teams: finalTeams,
-			lotteryOver: true,
-			lastRan
-		});
-
-
+		// Setup the lottery on mount
+		this.props.setupLottery();
 	}
 
 	render(){
-		let { roundInProgress, numbersPicked, winners, teams, replayLastRound, lotteryOver, lastRan } = this.state;
+		debugger;
+		let { teams, round, winners, draftComplete } = this.props.lottery;
 		return (
-			<div>
-				<span className="last-ran">Lottery last ran: {lastRan ? moment.unix(lastRan).format("MMM Do YYYY @ h:mm A") : "never"}</span>
-				<div className="container">
-					{ replayLastRound ? <p className="alert alert-danger">Redraw combo has been selected. Please start the round over.</p> : null }
-					{ numbersPicked.length > 0 ? <BallList balls={numbersPicked}/> : null }
-					<div className="row buttons">
-						<div className="col-sm">
-							{ !roundInProgress && !lotteryOver ? <button type="button" id="start-btn" className="btn btn-lg btn-primary hidden" onClick={this.handleStartRound}>Start Round</button> : null }
-							{ roundInProgress ? <button type="button" id="draw-btn" className="btn btn-lg btn-primary" onClick={this.handleDrawBall}>Draw Ball</button> : null }
-							<button type="button" id="reset-btn" className="btn btn-lg btn-primary" onClick={this.handleReset}>Reset</button>
-						</div>
-					</div>
-					{ lotteryOver ? <h2 className="draft-order">Draft Order:</h2> : null }
-					{ winners.length > 0 ? <WinnerList winners={winners} /> : null } 
-					<OddsTable teams={teams}  lotteryOver={lotteryOver}/>
-				</div>
-			</div>
+			<Grid container spacing={0}>
+				<AppBar position="static" justify="space-between" className="appHeader">
+					<Toolbar className="appHeader--content">
+						<Typography variant="title" color="inherit" component="h1">
+							2018 NHL Lottery Simulator
+						</Typography>
+						<Button onClick={this.props.resetLottery} variant="raised" color="secondary">Reset</Button>
+					</Toolbar>
+				</AppBar>
+				<Toolbar className="appDetails">
+					<Typography component="p" variant="title" color="inherit">
+					   Made by <a href="http://www.robalonzi.com" target="_blank">Rob Alonzi </a>. 
+					   Find me on <a href="https://github.com/RobAlonzi" target="_blank"><img className="githubLogo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACoklEQVQ4T32TXUhUQRTH/2furrrr3jJJeshC83pNAiu0uwgFIghKQUG9RlCQGRGBRPbUY/RBRT24hNRLgVAEUYg+FNFDuqs+RJnrerWPB0OirJ3dza87J+5eUzNxnubMzP83Z/5zDmHFCBo1uzVNNCvl1AvStrrbSuGzpuGlw4ikE7G3yyW0GBTXBvTg3B0m0UDMt0H8XI6U2qj7RvqENMC+A0R8lgldciZ4Dp9eTbtaD5AVz/cANK6nnNMTE4OZlZm58aaqqvzMdCAC4i1yJtjoQrIA3azpAOCXiYFjhUZ43Q87mlwNsGFb9fqp8cFfoXLrgRCQyZFYC7lv9gnxNJRytrs360Z4GEKlAXqiGGUuSBDGCDjCin3S7q8q2lEXmp6TcQVtP+kVVgQKY3I0ds09HDQtW4Mn/G8oiks7WullHb5IQDHll1cniH2HUnb0g25a+wC8XlW8sEiKapN2tC/ftHYKRZ2kG9aMzE3rGBqa1c09bQBdXgsAoFUmYjc8Q/O+/wMIlVvNRIisCWA6Lkej9xcB+YY1Qn51ODU88D5g1m7WyEkQI7gaxFFIkUNG+mN0MltwAg9pXYXVzkxf5GzgZiiQMjBPhSBcIZDlfsACSDlAnyb4vIz3v3HXQqZ1CcBG8szgLj9E5ZxQbVDolXb/M90MXwe4NQtgdVWODlz4m1VBya4CJ8cXV8Lf4BVShRUhhwoCwd8nMpncXsWUI0iVQQjfgqhbJmJNC3Ohm+FHpNTXpN1/xivlkro8PTfTTYxJ+LUWnp8rghIdIOzNJsDoSY3GGr2bc+4BqkCqn02w7ZmlZvIgt8A4yKB2BT6qAYYLUA5GNA2dDHWKFD1OYqrVFS810zLLXU800ElWqIfgUm9LjTPECxba3XS8993yH/oDcTgiiDDH21UAAAAASUVORK5CYII="/></a>
+					</Typography>
+					<Typography component="p" variant="title" color="inherit">
+						Draft Last Ran: {
+							Utility.getLastRan() ? moment.unix(Utility.getLastRan()).format("MMM Do YYYY @ h:mm A") : "Never"
+						}
+					</Typography>
+				</Toolbar>
+
+				{ draftComplete ? null :  
+				<Grid container spacing={0} justify={'center'} className="buttonContainer">
+					<Grid item>
+						<Button 
+							onClick={this.props.lottery.round.inProgress ? this.props.drawBall : this.props.startRound} 
+							variant="raised" 
+							color="primary">
+							{ this.props.lottery.round.inProgress ? "Draw Ball" : "Start Round" }
+						</Button>
+					</Grid>
+				</Grid> }
+
+				<Grid container spacing={0} justify={'space-around'}>
+					{ draftComplete ? null :
+					<Grid item xs={12} lg={4}>
+						<Grid item xs={12}>
+							<BallList balls={round.ballsDrawn}/>
+						</Grid>
+
+						<Grid item xs={12}>
+							<OddsTable teams={teams} inProgress={this.props.lottery.round.inProgress}/>
+						</Grid>
+					</Grid> }
+					<Grid item xs={12} lg={4}>
+						{ draftComplete ?
+						<Toolbar>
+							<Typography className="draftOrder--title" variant="title" color="inherit" component="h1">
+								Final Order
+							</Typography>
+						</Toolbar>	
+						: null}
+						<DraftOrder order={winners} />
+					</Grid>
+				</Grid>
+				<Snackbar 
+					open={ round.isRedrawWinner }
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'right',
+					}}
+					SnackbarContentProps={{
+						className: 'main-snackbar',
+					  }}
+					message={<span id="message-id">Redraw combo has been selected. Please start the round over.</span>}
+				/>
+			</Grid>
 		);
 	}
 }
 
-export default App;
+function mapStateToProps(state){
+	return {
+		lottery: state.lottery
+	}
+}
+
+export default connect(mapStateToProps, { setupLottery, resetLottery, startRound, drawBall })(App);

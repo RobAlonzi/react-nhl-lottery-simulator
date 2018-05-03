@@ -1,21 +1,29 @@
 import React from "react";
-import "./BallList.scss";
+import PropTypes from "prop-types";
+import Grid from 'material-ui/Grid';
 
 import Ball from "./Ball";
 
+
 const BallList = ({ balls, style = "default" }) => {
-	const ballsArray = balls.map(ball => <Ball key={ball} number={ball} style={style} /> );
+	const ballsArray = balls.map(ball => {
+		return (
+			<Grid key={ball} item xs={6} sm={3}>
+				<Ball number={ball} style={style} />
+			</Grid>
+		)
+	});
 
 	return (
-    <div className="row lottery-balls">
-      {ballsArray}
-    </div>
+		<Grid container spacing={24}>
+			{ballsArray}
+		</Grid>
 	);
 };
 
 BallList.propTypes = { 
-	balls: React.PropTypes.array.isRequired, 
-	style:React.PropTypes.string 
+	balls: PropTypes.array.isRequired, 
+	style: PropTypes.string 
 };
 
 export default BallList;

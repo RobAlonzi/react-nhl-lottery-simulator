@@ -1,5 +1,5 @@
 import React from "react";
-import "./Ball.scss";
+import PropTypes from "prop-types";
 
 const Ball = ({ number, style }) => {
 	return (
@@ -10,8 +10,8 @@ const Ball = ({ number, style }) => {
 };
 
 Ball.propTypes = { 
-	number: React.PropTypes.number.isRequired,
-	style: React.PropTypes.string
+	number: PropTypes.number.isRequired,
+	style: PropTypes.string
 };
 
 export default Ball;
