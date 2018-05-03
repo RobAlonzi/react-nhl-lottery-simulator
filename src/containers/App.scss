@@ -1,57 +1,210 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
 @import "../variables";
 
-header{
-	background: $blue;
-	padding:20px 0;
-	text-align:center;
+.appHeader{
+	.appHeader--content{
+		justify-content: space-between;
 	
-	h1{
-		color:$white;
-		margin:0;
+		h1{
+			font-size:2em;
+		}
+	}
+}
+
+.appDetails{
+
+	&.appDetails--lastRan p{
+			text-align: right;
+			margin-right:10px;
+
+			@include mq("phone"){
+				text-align: left;
+				margin: 10px 0 40px 10px;
+			}
+	}
+
+	&.appDetails--gitHub p{
+		margin-left:10px;
+
+		.githubLogo{
+			margin-left:3px;
+			position:relative;
+			top:-2px;
+		}
+	}
+
+	p{
+		margin: 10px 0 40px;
+		font-size:1em;
+		font-weight:200;
 
 		@include mq("phone"){
-			font-size:2rem;
+			margin: 10px 0 0;
 		}
 	}
+
+	
 }
 
+.buttonContainer{
+	margin: 0 0 40px;
+}
 
-.buttons{
-	text-align:center;
-	margin-top:40px;
-	button{
-		margin:20px;
-		cursor:pointer;
+.main-snackbar{
+	background-color: #f8d7da !important;
+	color:#721c24 !important;
+	border: 1px solid #f5c6cb !important;
+}
 
-		@include mq("phablet"){
-			margin:10px;
-		}
-	}
+.ball{
+	border-radius: 50%;
+	width:100px;
+	height:100px;
+	background: radial-gradient(circle at 50% 40%,#fcfcfc,#efeff1 66%,#9b5050 100%);
+	margin:20px auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	@include mq("phablet"){
-		margin-top:20px;
+		width:75px;
+		height:75px;
+	}
+
+
+	span{
+		font-size:2em;
+	}
+
+	&.ball-small{
+		width:40px;
+		height:40px;
+		span{
+			font-size:0.75em;
+		}
 	}
 }
 
-.alert-danger{
-	margin:20px 0;
+.oddsTable{
+	.oddsTable--noCombos{
+		opacity:0.25;
+	}
+
+	.oddsTable--nameCell{
+		align-items: center;
+		img{
+			margin-right: 10px;
+			max-width:50px;
+			max-height: 50px;
+		}
+		p{
+			position:relative;
+			top:2px;
+		}
+		img, p{
+			display: inline-block;
+		}
+	}
+
+	.oddsTable--combosCell{
+		span{
+			font-weight: bold;
+			display: inline-block;
+			margin-right:5px;
+		}
+
+		.oddsTable--winsWith{
+			margin-bottom:0;
+			font-style: italic;
+		}
+	}
 }
 
-.draft-order{
-	background: $blue;
-	color: $white;
-	padding: 0.5rem 1rem;
-	text-align: center;
-	margin-top:50px;
+.winnerCard{
+	margin: 10px;
+
+	.winnerCard--content{
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		.winnerCard--pick{
+			align-self:flex-start;
+			font-size:2.5em;
+		}
+
+		.winnerCard--imageContainer{
+			height:150px;
+			margin-bottom:20px;
+
+			img{
+				height: 100%;
+			}
+		}
+
+		.winnerCard--teamName{
+			height:80px;
+			font-size:1.4em;
+
+			p.changeArrow{
+				text-align: center;
+	
+				&.changeArrow--arrow_upward{
+					color:green;
+				}
+	
+				&.changeArrow--arrow_downward{
+					color:red;
+				}
+	
+				span{
+					position: relative;
+					top:3px;
+				}
+			}
+		}
+	}
 }
 
-.last-ran{
-	text-align: right;
-	display: block;
-	padding:10px;
+.orderTable{
+	.orderTable--nameCell{
+		align-items: center;
+		img{
+			margin-right: 10px;
+			max-width:50px;
+			max-height: 50px;
+		}
+		p{
+			position:relative;
+			top:2px;
+		}
+		img, p{
+			display: inline-block;
+		}
+	}
 
-	@include mq("phone"){
+
+	p.changeArrow{
 		text-align: center;
-		padding:0;
+		margin:0;
+
+		&.changeArrow--arrow_upward{
+			color:green;
+		}
+
+		&.changeArrow--arrow_downward{
+			color:red;
+		}
+
+		span{
+			position: relative;
+			top:3px;
+			font-size:16px;
+		}
 	}
+}
+
+.draftOrder--title{
+	font-size:2.5em;
 }

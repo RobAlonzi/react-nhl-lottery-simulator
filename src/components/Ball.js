@@ -1,6 +1,12 @@
 import React from "react";
-import "./Ball.scss";
+import PropTypes from "prop-types";
 
+/**  
+ * Component that will create a ping pong style looking ball
+ * @param {Number} number - The number the ball should have on it
+ * @param {String} style - Adds a default or small class to the ball for CSS purposes
+ * @returns {Function}
+ * */
 const Ball = ({ number, style }) => {
 	return (
 		<div className={`ball ball-${style}`}>
@@ -10,8 +16,8 @@ const Ball = ({ number, style }) => {
 };
 
 Ball.propTypes = { 
-	number: React.PropTypes.number.isRequired,
-	style: React.PropTypes.string
+	number: PropTypes.number.isRequired,
+	style: PropTypes.string
 };
 
 export default Ball;
