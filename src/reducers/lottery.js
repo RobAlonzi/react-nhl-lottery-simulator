@@ -23,8 +23,6 @@ const initialState = {
 };
 
 export default function(state = initialState, action){
-	console.log(action.type);
-
 	switch(action.type){
 		case LOTTERY_UPDATE_TEAM_LIST:
 			return { ...state, teams: action.payload };

@@ -4,29 +4,41 @@ let path = require("path"),
 	ExtractTextPlugin = require("extract-text-webpack-plugin"),
 	OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-//3rd party modules
-const vendorModules = ["react", "react-dom", "prop-types", "material-ui"];
-const isDebug = true;
+const isDebug = false;
 const dirname = path.resolve("./");
 
 const devTool = isDebug ? "eval-source-map" : "";
 const plugins = [ 
   new HtmlWebpackPlugin({template: "./src/index.html"}),
 ];
+const mode = isDebug ? "development" : "production";
+
+let optimization = {};
 
 const cssLoader = { test: /\.css$/, use: ["style-loader", "css-loader"]};
 const sassLoader = { test: /\.scss$/, use: ["style-loader", "css-loader", "sass-loader"] };
 const appEntry = __dirname + "/src/client.js";
 
 
+if(!isDebug){
+	plugins.push(new ExtractTextPlugin("css/[name].[hash].css"));
+	plugins.push(new OptimizeCssAssetsPlugin({
+		cssProcessorOptions: { discardComments: {removeAll: true } }
+	}));
+
+	cssLoader.use = ExtractTextPlugin.extract({ use: "css-loader" });
+	sassLoader.use = ExtractTextPlugin.extract({ use: "css-loader!sass-loader"});
+
+	optimization.runtimeChunk = true;
+}
+
 // ---------------------
 // WEBPACK CONFIG
 module.exports = {
 		devtool: devTool,
-		mode: 'development',
+		mode: mode,
 		entry: {
-			application: appEntry,
-			vendor: vendorModules
+			application: appEntry
 		},
 		output: {
 			path: path.join(dirname, "public"),
@@ -45,18 +57,8 @@ module.exports = {
 				cssLoader,
 				sassLoader
 			]
-    },
-    plugins: plugins,
-    optimization: {
-      splitChunks: {
-          cacheGroups: {
-              vendor: {
-                  test: 'vendor',
-                  name: "vendor",
-                  chunks: "initial"
-              }
-          }
-      }
-    },
+		},
+		optimization: optimization,
+    plugins: plugins
 	};
 	// ---------------------

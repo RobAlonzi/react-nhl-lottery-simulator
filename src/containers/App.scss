@@ -12,21 +12,38 @@
 }
 
 .appDetails{
-	justify-content: space-between;
-	margin: 0 0 40px;
-	width:100%;
+
+	&.appDetails--lastRan p{
+			text-align: right;
+			margin-right:10px;
+
+			@include mq("phone"){
+				text-align: left;
+				margin: 10px 0 40px 10px;
+			}
+	}
+
+	&.appDetails--gitHub p{
+		margin-left:10px;
+
+		.githubLogo{
+			margin-left:3px;
+			position:relative;
+			top:-2px;
+		}
+	}
 
 	p{
-		margin: 0;
+		margin: 10px 0 40px;
 		font-size:1em;
 		font-weight:200;
+
+		@include mq("phone"){
+			margin: 10px 0 0;
+		}
 	}
 
-	.githubLogo{
-		margin-left:3px;
-		position:relative;
-		top:-2px;
-	}
+	
 }
 
 .buttonContainer{
@@ -128,6 +145,7 @@
 
 		.winnerCard--teamName{
 			height:80px;
+			font-size:1.4em;
 
 			p.changeArrow{
 				text-align: center;

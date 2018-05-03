@@ -8,9 +8,14 @@ import Typography from 'material-ui/Typography';
 
 import Winner from "./Winner";
 
+/**  
+ * Component that will build out a draft order list
+ * @param {Object[]} order - The array of team information
+ * @returns {Function}
+ * */
 const DraftOrder = ({ order }) => {
 
-	// The top three picks 
+	// The top three picks will get Card components and not table rows
 	const winnerCards = order.slice(0, 3).map((item, i) => {
 		const size = i === 0 ? 12 : 6;
 
@@ -19,6 +24,7 @@ const DraftOrder = ({ order }) => {
 		);
 	});
 
+	// The remaining order will get table row components
 	const remaining = order.slice(3).map((item, i) => {
 		return ( 
 			<Winner key={item.team.id} {...item} />

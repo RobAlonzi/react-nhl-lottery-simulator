@@ -9,11 +9,25 @@ import Typography from 'material-ui/Typography';
 
 import BallList from "./BallList";
 
+
+/**  
+ * Component that will build out either a Card component or Table row that will show a team's information
+ * in the final draft order table
+ * @param {String || null} type - Will be 'card' or null
+ * @param {Number} size - For Card components, the size of the card
+ * @param {Number} pick - What pick this team has
+ * @param {Object} team - The team information
+ * @param {Array} winningCombo - For winners, which combo won for them
+ * @param {Number} changeInPosition - If they moved up or down
+ * @returns {Function}
+ * */
 const Winner = ({ type, size, pick, team, winningCombo, changeInPosition }) => {
 	let changeClass = changeInPosition > 0 ? "arrow_upward" : "arrow_downward";
+	// Convert negative numbers to positive
 	let absDifference = Math.abs(changeInPosition);
 	let logoUrl =`https://www-league.nhlstatic.com/builds/site-core/8d679dc125a67f8bf52f63a8cb3e70be14f173e9_1491511772/images/logos/team/current/team-${team.id}-dark.svg`;
 	
+	// If we need to make a card
 	if(type === 'card'){
 		return (
 		<Grid key={team.id} item xs={size}>
@@ -35,6 +49,7 @@ const Winner = ({ type, size, pick, team, winningCombo, changeInPosition }) => {
 			</Card>
 		</Grid> 
 		);
+	// It's a Table row, not a card	
 	} else{
 		return (
 		<TableRow key={team.id}>
@@ -54,14 +69,3 @@ Winner.propTypes = {
 };
 
 export default Winner;
-
-
-
-
-
-
-// <div className="winning-team">
-// 			<h2>Pick #{pick}</h2>
-// 			<p><img src={logoUrl} /> {team.name} <span className={`change-${changeClass}`}>(<i className={`fa fa-arrow-${changeClass}`}></i> {absDifference})</span></p>
-// 			<BallList balls={winningCombo} style="small"/>
-// 		</div>
